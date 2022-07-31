@@ -8,8 +8,11 @@
       auto-complete="on"
       label-position="left"
     >
+      <!-- 放置标题图片 @是设置的别名-->
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">
+          <img src="@/assets/common/login-logo.png" alt="" />
+        </h3>
       </div>
 
       <el-form-item prop="username">
@@ -52,14 +55,15 @@
       <el-button
         :loading="loading"
         type="primary"
+        class="loginBtn"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
+        >登录</el-button
       >
 
       <div class="tips">
-        <span style="margin-right: 20px">username: admin</span>
-        <span> password: any</span>
+        <span style="margin-right: 20px">账号: 13800000002</span>
+        <span> 密码: 123456</span>
       </div>
     </el-form>
   </div>
@@ -88,19 +92,19 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '111111',
       },
       loginRules: {
         username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
+          { required: true, trigger: 'blur', validator: validateUsername },
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
-        ]
+          { required: true, trigger: 'blur', validator: validatePassword },
+        ],
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
     }
   },
   watch: {
@@ -108,8 +112,8 @@ export default {
       handler: function (route) {
         this.redirect = route.query && route.query.redirect
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     showPwd() {
@@ -140,8 +144,8 @@ export default {
           return false
         }
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -150,8 +154,8 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg: #283443;
-$light_gray: #fff;
-$cursor: #fff;
+$light_gray: #68b0fe;
+$cursor: #68b0fe;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -161,6 +165,15 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  background: url('~@/assets/common/login.jpg') no-repeat; // 设置背景图片
+  background-size: cover;
+
+  .loginBtn {
+    background: #407ffe;
+    height: 64px;
+    line-height: 32px;
+    font-size: 24px;
+  }
   .el-input {
     display: inline-block;
     height: 47px;
@@ -185,7 +198,7 @@ $cursor: #fff;
 
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.7); // 输入登录表单的背景色
     border-radius: 5px;
     color: #454545;
   }
@@ -200,7 +213,7 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
   overflow: hidden;
 
   .login-form {
