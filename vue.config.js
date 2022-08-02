@@ -27,7 +27,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: process.env.NODE_ENV === 'development',
+  lintOnSave: false,
   productionSourceMap: false,
   devServer: {
     port: port,
@@ -36,7 +36,11 @@ module.exports = {
       warnings: false,
       errors: true,
     },
-    before: require('./mock/mock-server.js'),
+    proxy: {
+      '/api': {
+        target: 'http://ihrm-java.itheima.net/', //跨域的服务器
+      },
+    },
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

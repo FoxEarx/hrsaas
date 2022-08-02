@@ -1,9 +1,14 @@
 import request from '@/utils/request'
 
+/**
+ * 登录
+ * @param {Object} data mobile password
+ * @returns promise
+ */
 export function login(data) {
   return request({
-    url: '/vue-admin-template/user/login',
-    method: 'post',
+    url: '/sys/login',
+    method: 'POST',
     data,
   })
 }
