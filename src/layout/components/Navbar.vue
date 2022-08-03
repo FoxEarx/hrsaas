@@ -14,7 +14,11 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="$store.state.user.userInfo.staffPhoto" class="user-avatar" />
+          <img
+            :src="$store.state.user.userInfo.staffPhoto"
+            class="user-avatar"
+            v-imgError="defaultImg"
+          />
           <span>{{ $store.state.user.userInfo.username }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -37,6 +41,12 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
+  data() {
+    return {
+      defaultImg:
+        'https://img2.baidu.com/it/u=1940507931,330831891&fm=253&fmt=auto&app=138&f=JPEG?w=640&h=360',
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
