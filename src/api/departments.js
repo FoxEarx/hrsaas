@@ -21,3 +21,37 @@ export function delDeptsApi(id) {
     method: 'DELETE',
   })
 }
+/**
+ * 添加部门
+ * @param {*} id
+ * @returns
+ */
+export function addDeptsApi(data) {
+  return request({
+    url: `/company/department`,
+    method: 'POST',
+    data,
+  })
+}
+/**
+ * 编辑部门
+ * @param {*} id
+ * @returns
+ */
+export function titleDeptsApi(id) {
+  return request({
+    url: `/company/department/${id}`,
+  })
+}
+/**
+ * 编辑详情
+ * @param {*} id
+ * @returns
+ */
+export function editDeptsApi(data) {
+  return request({
+    url: `/company/department/${data.id}`,
+    method: 'PUT',
+    data,
+  })
+}

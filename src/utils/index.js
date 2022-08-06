@@ -120,9 +120,9 @@ export function param2Obj(url) {
 
 /**
  * 处理数据变成树形数据
- * @param {*} data
- * @param {*} pid
- * @returns
+ * @param  data
+ * @param  pid
+ * @returns 树形数据
  */
 export function transListtoTree(data, pid) {
   const tree = []

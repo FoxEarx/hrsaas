@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
-      <el-card class="box-card">
+      <el-card class="box-card" v-loading="loading">
         <!-- 头部 -->
         <TreeTools
-          @add="dialogVisible = true"
+          @add="showAddDept"
           :isRoot="true"
           :treeNode="company"
         ></TreeTools>
@@ -12,14 +12,20 @@
         <el-tree :data="treeData" :props="defaultProps">
           <template v-slot="scoped">
             <TreeTools
-              @add="dialogVisible = true"
+              @add-success="loadDepts"
+              @add="showAddDept"
               @remove="loadDepts"
+              @edit="showEdit"
               :treeNode="scoped.data"
             ></TreeTools>
           </template>
         </el-tree>
       </el-card>
-      <addDept :visible="dialogVisible"></addDept>
+      <addDept
+        ref="addDept"
+        :visible.sync="dialogVisible"
+        :currentNode="currentNode"
+      ></addDept>
     </div>
   </div>
 </template>
@@ -33,6 +39,7 @@ import addDept from './components/add-dept.vue'
 export default {
   data() {
     return {
+      currentNode: {},
       dialogVisible: false,
       treeData: [
         { name: '总裁办', children: [{ name: '董事会' }] },
@@ -43,6 +50,7 @@ export default {
         label: 'name',
       },
       company: { name: '传智教育', manager: '负责人' },
+      loading: false,
     }
   },
 
@@ -52,9 +60,19 @@ export default {
 
   methods: {
     async loadDepts() {
+      this.loading = true
       const res = await getDeptsApi()
       this.treeData = transListtoTree(res.depts, '')
+      this.loading = false
       console.log(res)
+    },
+    showAddDept(val) {
+      this.dialogVisible = true
+      this.currentNode = val
+    },
+    showEdit(val) {
+      this.dialogVisible = true
+      this.$refs.addDept.getDeptsId(val.id)
     },
   },
   components: {
