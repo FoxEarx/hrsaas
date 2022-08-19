@@ -19,7 +19,9 @@ import * as directives from '@/directive'
 import dayjs from 'dayjs'
 //过滤器
 import * as filters from '@/filters'
-
+//打印
+import Print from 'vue-print-nb'
+Vue.use(Print)
 //mock假数据
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')

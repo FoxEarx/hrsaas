@@ -27,7 +27,9 @@
           <el-tab-pane label="个人详情" v-model="activeName" name="second">
             <UserInfo></UserInfo>
           </el-tab-pane>
-          <el-tab-pane label="岗位信息" v-model="activeName" name="third" />
+          <el-tab-pane label="岗位信息" v-model="activeName" name="third">
+            <JoinInfo></JoinInfo>
+          </el-tab-pane>
         </el-tabs>
       </el-card>
     </div>
@@ -37,7 +39,9 @@
 <script>
 import { getUserDetails } from '@/api/user'
 import { saveUserDetailById } from '@/api/employees'
-import UserInfo from '@/components/user-info.vue'
+import UserInfo from './components/user-info.vue'
+import JoinInfo from './components/join-info.vue'
+
 import Cookies from 'js-cookie'
 
 export default {
@@ -67,6 +71,7 @@ export default {
   },
   components: {
     UserInfo,
+    JoinInfo,
   },
 }
 </script>
