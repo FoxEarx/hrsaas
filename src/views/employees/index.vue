@@ -8,12 +8,21 @@
             size="small"
             type="warning"
             @click="$router.push('/import')"
+            v-if="isHas(point.employees.import)"
             >导入</el-button
           >
-          <el-button size="small" type="danger" @click="exportEmployees"
+          <el-button
+            size="small"
+            type="danger"
+            @click="exportEmployees"
+            v-if="isHas(point.employees.export)"
             >导出</el-button
           >
-          <el-button size="small" type="primary" @click="addEmployees"
+          <el-button
+            size="small"
+            type="primary"
+            @click="addEmployees"
+            v-if="isHas(point.employees.add)"
             >新增员工</el-button
           >
         </template>
@@ -67,14 +76,31 @@
                 type="text"
                 size="small"
                 @click="$router.push('/employees/detail/' + row.id)"
+                v-if="isHas(point.employees.edit)"
                 >查看</el-button
               >
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small" @click="onSave(row.id)"
+              <el-button
+                type="text"
+                size="small"
+                @click="showAssignDialog(row.id)"
+                >角色</el-button
+              >
+              <el-button
+                type="text"
+                size="small"
+                @click="onSave(row.id)"
+                v-if="isHas(point.employees.del)"
                 >删除</el-button
+              >
+              <el-button
+                size="small"
+                type="primary"
+                @click="addEmployees"
+                v-if="isHas(point.employees.add)"
+                >新增员工</el-button
               >
             </template>
           </el-table-column>
@@ -98,6 +124,11 @@
     <el-dialog title="头像二维码" :visible.sync="ercodeDialog" width="30%">
       <canvas id="canvas"></canvas>
     </el-dialog>
+    <AssignRole
+      :employees="currentEmployeesId"
+      :Visible="showAssignRole"
+      @onClose="onClose"
+    ></AssignRole>
   </div>
 </template>
 
@@ -105,8 +136,10 @@
 import { getEmployeesInfoApi, delEmployee } from '@/api/employees'
 import employees from '@/constant/employees'
 import AddEmployees from './components/addEmployees.vue'
+import mixinsPonit from '@/mixins/permission'
 const { exportExcelMapPath, hireType } = employees
 import QRcode from 'qrcode'
+import AssignRole from './components/assign-role'
 export default {
   data() {
     return {
@@ -118,9 +151,11 @@ export default {
       },
       isShowAddEmployees: false,
       ercodeDialog: false,
+      showAssignRole: false,
+      currentEmployeesId: '',
     }
   },
-
+  mixins: [mixinsPonit],
   created() {
     this.getEmployeesInfo()
   },
@@ -190,9 +225,17 @@ export default {
         QRcode.toCanvas(canvas, '你的头像')
       })
     },
+    showAssignDialog(id) {
+      this.showAssignRole = true
+      this.currentEmployeesId = id
+    },
+    onClose() {
+      this.showAssignRole = false
+    },
   },
   components: {
     AddEmployees,
+    AssignRole,
   },
 }
 </script>
