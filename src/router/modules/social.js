@@ -10,6 +10,7 @@ export default {
       path: '',
       component: () => import('@/views/social'),
       meta: { title: '社保', icon: 'table' },
+      name: 'social_securitys',
     },
   ],
 }

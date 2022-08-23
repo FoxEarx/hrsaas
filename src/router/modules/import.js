@@ -9,6 +9,7 @@ export default {
     {
       path: '',
       component: () => import('@/views/import'),
+      name: 'import',
     },
   ],
 }

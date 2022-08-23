@@ -12,6 +12,7 @@
       <!-- 头部导航栏 -->
       <div :class="{ 'fixed-header': fixedHeader }">
         <navbar />
+        <TagsView></TagsView>
       </div>
       <!-- 路由出口 -->
       <app-main />
@@ -20,7 +21,7 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, AppMain, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -28,7 +29,8 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    TagsView,
   },
   mixins: [ResizeMixin],
   computed: {
@@ -46,15 +48,15 @@ export default {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        mobile: this.device === 'mobile',
       }
-    }
+    },
   },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
-    }
-  }
+    },
+  },
 }
 </script>
 
